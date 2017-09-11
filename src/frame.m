@@ -38,7 +38,9 @@ frame_titlebar_height (xp_frame_class class)
     XAppleWMFrameGetRect (x_dpy, class, XP_FRAME_RECT_TITLEBAR,
                           0, 0, 0, 0, 0, 0, 0, 0, &x, &y, &w, &h);
 
-    return h;
+    /* return h; */
+    // Edit: return 0 to disable the white area in place of the title bar when disabling the macOS frame drawing
+    return 0;
 }
 
 void
@@ -81,12 +83,13 @@ draw_frame (int screen, Window xwindow_id, X11Rect outer_r, X11Rect inner_r,
        inner_r.x, inner_r.y, inner_r.width, inner_r.height, class, attr,
        title_length ? (char *)title_bytes : "(none)");
 
-    XAppleWMFrameDraw (x_dpy, screen, xwindow_id, class, attr,
-                       inner_r.x, inner_r.y,
-                       inner_r.width, inner_r.height,
-                       outer_r.x, outer_r.y,
-                       outer_r.width, outer_r.height,
-                       title_length, title_bytes);
+    // Edit: disable to disable macOS frame
+    /* XAppleWMFrameDraw (x_dpy, screen, xwindow_id, class, attr, */
+    /*                    inner_r.x, inner_r.y, */
+    /*                    inner_r.width, inner_r.height, */
+    /*                    outer_r.x, outer_r.y, */
+    /*                    outer_r.width, outer_r.height, */
+    /*                    title_length, title_bytes); */
 }
 
 X11Rect
@@ -116,7 +119,9 @@ frame_growbox_rect (X11Rect outer_r, X11Rect inner_r, xp_frame_class class)
                           outer_r.width, outer_r.height,
                           &x, &y, &w, &h);
 
-    return X11RectMake (x, y, w, h);
+    /* return X11RectMake (x, y, w, h); */
+    // Edit: Prevents creating the growbox
+    return X11RectMake (x, y, 0, 0);
 }
 
 unsigned int

@@ -859,8 +859,10 @@ ENABLE_EVENTS (_id, X_CLIENT_WINDOW_EVENTS)
         XSelectInput (x_dpy, _tracking_id, X_TRACKING_WINDOW_EVENTS);
     }
 
-    if (_growbox_id == 0 && !_shaded && _resizable &&
-        XP_FRAME_ATTR_IS_SET (_frame_attr, XP_FRAME_ATTR_GROW_BOX))
+    /* if (_growbox_id == 0 && !_shaded && _resizable && */
+    /*     XP_FRAME_ATTR_IS_SET (_frame_attr, XP_FRAME_ATTR_GROW_BOX)) */
+    // Edit: it seems we need to disable this if we set the growbox at 0 in frame.m, otherwise the windows disappears from the X server when resized with wmctrl (ie, wmctrl -l shows nothing)
+    if (false)
     {
         XSetWindowAttributes attr;
         unsigned long attr_mask = 0;
